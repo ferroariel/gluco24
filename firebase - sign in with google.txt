@@ -1,0 +1,102 @@
+
+Autentica mediante el Acceso con Google con JavaScript
+Puedes permitir que tus usuarios se autentiquen en Firebase mediante su cuenta de Google al integrar el Acceso con Google en tu app. Puedes integrar el Acceso con Google ya sea mediante el uso del SDK de Firebase para llevar a cabo el flujo de acceso o puedes hacerlo de forma manual y pasar el token de ID resultante a Firebase.
+
+Antes de comenzar
+Agrega Firebase a tu proyecto de JavaScript.
+Habilita el Acceso con Google en la consola de Firebase:
+En Firebase console, abre la sección Auth.
+En la pestaña Método de acceso, habilita el método de acceso de Google y haz clic en Guardar.
+Maneja el flujo de acceso con el SDK de Firebase
+La manera más sencilla de autenticar a tus usuarios con Firebase mediante sus cuentas de Google es manejar el flujo de acceso con Firebase JavaScript SDK. (Si deseas autenticar a un usuario en Node.js u otro entorno que no sea de un navegador, debes manejar el flujo de acceso manualmente).
+
+Para manejar el flujo de acceso con el SDK de Firebase para JavaScript, sigue estos pasos:
+
+Crea una instancia del objeto del proveedor de Google:
+var provider = new firebase.auth.GoogleAuthProvider();
+Opcional: Especifica los alcances adicionales de OAuth 2.0 que deseas solicitarle al proveedor de autenticación. Para agregar un alcance, invoca a addScope. Por ejemplo:
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+Consulta la documentación del proveedor de autenticación.
+Opcional: Para ajustar el OAuth del proveedor según su idioma de preferencia sin pasar de forma explícita los parámetros OAuth personalizados relevantes, actualiza el código de idioma en la instancia Auth antes de iniciar el flujo de OAuth. Por ejemplo:
+firebase.auth().languageCode = 'pt';
+// To apply the default browser preference instead of explicitly setting it.
+// firebase.auth().useDeviceLanguage();
+Opcional: Especifica los parámetros personalizados adicionales del proveedor de OAuth que quieres enviar junto con la solicitud de OAuth. Para agregar un parámetro personalizado, llama a setCustomParameters en el proveedor inicializado con un objeto que contenga la clave que se indica en la documentación del proveedor de OAuth y su valor correspondiente. Por ejemplo:
+provider.setCustomParameters({
+  'login_hint': 'user@example.com'
+});
+No se permiten los parámetros de OAuth necesarios reservados y se ignorarán. Consulta la referencia del proveedor de autenticación para obtener más información.
+Autentica con Firebase a través del objeto del proveedor de Google. Puedes pedirle a los usuarios que accedan con sus cuentas de Google a través de una ventana emergente o redireccionándolos a la página de acceso. El método de redireccionamiento se prefiere en dispositivos móviles.
+Para ofrecer acceso con una ventana emergente, invoca signInWithPopup:
+firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Google Access Token. You can use it to access the Google API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  // ...
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+Además, ten en cuenta que puedes recuperar el token OAuth del proveedor de Google que se puede usar para obtener datos adicionales mediante el uso de las API de Google.
+Aquí también puedes detectar y resolver errores. Para obtener una lista de códigos de error, consulta los documentos de referencia de autenticación.
+
+Para acceder mediante el redireccionamiento a la página de acceso, invoca signInWithRedirect:
+firebase.auth().signInWithRedirect(provider);
+También puedes obtener el token de OAuth del proveedor de Google mediante la invocación de getRedirectResult cuando la página carga:
+firebase.auth().getRedirectResult().then(function(result) {
+  if (result.credential) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // ...
+  }
+  // The signed-in user info.
+  var user = result.user;
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+Aquí también puedes detectar y resolver errores. Para obtener una lista de códigos de error, consulta los documentos de referencia de autenticación.
+Maneja errores de cuentas que ya existen con otras credenciales
+Avanzado: Administra el flujo de acceso manualmente
+Avanzado: Autenticación con Firebase en Node.js
+Autentica con Firebase en una extensión de Chrome
+Si estás compilando una app de extensión de Chrome, debes incluir en la lista blanca el ID de extensión de Chrome:
+
+Abre tu proyecto en Firebase console.
+En la sección Authentication, abre la página Método de acceso.
+Agrega un URI como el siguiente a la lista de dominios autorizados:
+chrome-extension://CHROME_EXTENSION_ID
+Solo las operaciones con elementos emergentes (signInWithPopup y linkWithPopup) están disponibles para las extensiones de Chrome, ya que estas no pueden usar redireccionamientos HTTP. Deberías llamar a estos métodos desde una secuencia de comandos en segundo plano en lugar de una ventana emergente de acción en el navegador, ya que la ventana emergente de autenticación cancela la de acción del navegador.
+
+Asegúrate de incluir la URL https://apis.google.com en la lista blanca content_security_policy en tu archivo de manifiesto de la extensión de Chrome.
+
+Cómo personalizar el dominio de redireccionamiento para el acceso con Google
+Próximos pasos
+Cuando un usuario accede por primera vez, se crea una cuenta de usuario nueva y se la vincula con las credenciales (el nombre de usuario y la contraseña, el número de teléfono o la información del proveedor de autenticación) con las que accedió el usuario. Esta cuenta nueva se almacena como parte del proyecto de Firebase y puede usarse para identificar a un usuario en todas las apps del proyecto, sin importar el método de acceso que se use.
+
+En las apps, para conocer el estado de autenticación del usuario, te recomendamos configurar un observador en el objeto Auth. Puedes obtener la información básica de perfil del usuario a partir del objeto User. Consulta Cómo administrar usuarios.
+
+En las reglas de seguridad de Firebase Realtime Database y Cloud Storage, puedes obtener el ID del usuario único que accedió a partir de la variable auth y usarlo para controlar los datos a los que tiene acceso.
+
+Para permitir que los usuarios accedan a tu app con varios proveedores de autenticación, puedes vincular las credenciales de proveedores de autenticación a una cuenta de usuario existente.
+
+Para salir de la sesión de un usuario, llama a signOut de la siguiente manera:
+
+firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+}).catch(function(error) {
+  // An error happened.
+});

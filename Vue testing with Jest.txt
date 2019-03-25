@@ -1,0 +1,71 @@
+
+https://vueschool.io/lessons/install-jest
+
+Hi Ariel,
+
+Gusto from VueSchool here! How is your adventure with testing Vue.js applications? Did you go through our Test with Jest course already? We've got good news for you, the lessons are now complete.
+
+ Course code screenshot
+In the second part called Hands on TDD, Roman Kuba teaches us Test Driven Development in practice, by showing how to test a brand new library we are building together. That’s a great way to put our freshly gained knowledge in action.
+
+The videos cover writing specifications and tests for all the methods that we want to add to our library. We also provide a more advanced use case, teaching how to test a library configuration feature.
+
+For the dessert, there’s also an additional homework task that you can write yourself and compare with our solution. Have fun!
+
+If you haven't started the course yet, this is a good moment to do so as well.
+
+? Click here to watch new lessons
+
+? Click here to watch the full course
+
+
+ Course illustration 
+Test with Jest - the JavaScript’s favorite testing tool
+Jest is currently the most popular testing suite. No wonder, it's both powerful and easy to use. Created by the Facebook team, it quickly got the attention of the other big players on the web app market, such as Twitter, Instagram, Airbnb or Spotify.
+
+It's also a favorite solution for unit testing in the Vue.js community, thanks to its simplicity and minimal configuration approach.
+
+There are many features in Jest designed to ease the developers’ experience. This is very important because testing can be tricky in general, especially in a large codebase.
+
+During our Test with Jest course, you’ll get friendly with many Jest topics, such as:
+
+how to install and use Jest in our projects
+how to best use snapshot testing and other Jest features
+how to organize tests in groups and other best practices
+useful tips and tricks that will make our experience even better
+? Click here to learn how to Test with Jest
+
+
+ Course illustration 
+JavaScript Testing Fundamentals (Free)
+If you're new to the subject of testing or want to refresh your knowledge, why not try our Javascript Testing Fundamentals course? It's an introduction to testing that will be useful not only for beginner developers.
+
+We discuss testing as a concept and the common ways to write tests for different use cases in our Javascript applications. After this course, you will learn:
+
+why is testing so important
+how to know what parts of our code we should write tests for
+what's the difference between unit, integration and acceptance tests
+what are mocks, spies, stubs and other terms used in testing
+? Click here to learn Javascript Testing Fundamentals
+
+
+Learn together with us!
+ Vue School & Roman Kuba
+
+Both courses are made together with Roman Kuba, a prominent teacher not only in the Vue.js community, known for his passion and quality content especially regarding the topic of testing.
+
+Based on his and our experiences, we created the video series that we hope will make more developers and companies write proper tests and bring stable websites to all their users.
+
+We hope you like our new content and we’ll be happy to hear your thoughts about it. Feel free to write to us either on Twitter or in the comments.
+
+
+All the best,
+
+Darek "Gusto" Wedrychowski
+VueSchool.io
+
+ 
+Don't want any more emails from us? Unsubscribe | 2035 Sunset Lake RoadSuite B-2, Newark Delaware 19702, United States
+
+
+
